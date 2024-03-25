@@ -14,8 +14,21 @@ public class TransitionList {
             if (nextInput.toLowerCase(Locale.ROOT).equals("exit"))
                 break;
 
+            boolean uniqueStateChecker = true;
+
             Transition temp = new Transition(nextInput);
-            transitionList.add(temp);
+
+            for (Transition transition: transitionList){
+                if(transition.equals(temp)){
+                    uniqueStateChecker = false;
+                    break;
+                }
+            }
+            if (uniqueStateChecker) {
+                transitionList.add(temp);
+            }
+            else
+                System.out.println("Enter a unique Transition!");
         }
     }
 

@@ -26,10 +26,16 @@ public class RelationsList {
         String s1 = checkStateForCreatingARelation(scanner);
         System.out.println("Enter the final state: ");
         String s2 = checkStateForCreatingARelation(scanner);
-        System.out.println("Enter the relation between the states: " );
+        System.out.println("Enter the relation between the states: ");
         String t = checkTransitionForCreatingARelation(scanner);
-
-        relationsList.add(new Relation(new State(s1), new State(s2), new Transition(t)));
+        Relation newRelation = new Relation(new State(s1), new State(s2), new Transition(t));
+        for (Relation relation : relationsList){
+            if(relation.equals(newRelation)){
+                System.out.println("Enter a Unique Relation");
+                return;
+            }
+        }
+        relationsList.add(newRelation);
     }
 
     public static String checkTransitionForCreatingARelation(Scanner scanner) {

@@ -15,9 +15,18 @@ public class StatesList {
 
             if (nextInput.toLowerCase(Locale.ROOT).equals("exit"))
                 break;
-
+            boolean uniqueStateChecker = true;
             State temp = new State(nextInput);
-            stateList.add(temp);
+            for(State state: stateList){
+                if (state.equals(temp)) {
+                    uniqueStateChecker = false;
+                    break;
+                }
+            }
+            if(uniqueStateChecker)
+                stateList.add(temp);
+            else
+                System.out.println("Enter a unique state!");
         }
     }
 
