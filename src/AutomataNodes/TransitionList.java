@@ -8,7 +8,7 @@ public class TransitionList {
     public static void setTransitionList(Scanner scanner) {
         transitionList = new ArrayList<>();
         while (true) {
-            System.out.println("Enter the next needed Transitions: ");
+            System.out.println("Enter the next needed Transitions, type 'exit' to exit: ");
             String nextInput = scanner.nextLine();
 
             if (nextInput.toLowerCase(Locale.ROOT).equals("exit"))
@@ -27,5 +27,9 @@ public class TransitionList {
                 break;
             }
         return hasTransition;
+    }
+
+    public static boolean ifTransitionValidForRelation(Transition transition, Relation relation){
+        return transition.equals(relation.connection);
     }
 }

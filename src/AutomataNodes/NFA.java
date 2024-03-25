@@ -11,11 +11,11 @@ public class NFA{
         StatesList.setStateList(scanner);
         TransitionList.setTransitionList(scanner);
         RelationsList.setRelationsList(scanner);
-        setInitialState(scanner);
+        setStartState(scanner);
         setFinalState(scanner);
     }
-    static void setInitialState(Scanner scanner){
-        System.out.println("Enter the  initial state: ");
+    static void setStartState(Scanner scanner){
+        System.out.println("Enter the Start state: ");
         while (true){
             String s = scanner.nextLine();
             if(StatesList.checkIfInStateList(s)){
@@ -27,11 +27,11 @@ public class NFA{
         }
     }
     static void setFinalState(Scanner scanner){
-        System.out.println("Enter the no of final states: ");
+        System.out.println("Enter the no of Final states: ");
         int noOfFinalStates = Integer.parseInt(scanner.nextLine());
         finalState = new State[noOfFinalStates];
         for (int i = 0; i < noOfFinalStates; i++) {
-            System.out.println("Enter a final state: ");
+            System.out.println("Enter a Final state: ");
             String s = scanner.nextLine();
             if(StatesList.checkIfInStateList(s))
                 finalState[i] = new State(s);
@@ -40,5 +40,11 @@ public class NFA{
                 i--;
             }
         }
+    }
+    public static boolean ifNextStateInFinalStateArray(State checkState){
+        for(State state: finalState)
+            if(state.equals(checkState))
+                return true;
+        return false;
     }
 }

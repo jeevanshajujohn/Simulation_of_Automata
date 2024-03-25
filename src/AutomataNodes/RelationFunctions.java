@@ -1,6 +1,7 @@
 package AutomataNodes;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class RelationFunctions{
     static boolean check = false;
@@ -14,27 +15,32 @@ public class RelationFunctions{
     }
     public static boolean recursiveChecker(char[] arr, State preState){
         if(arr.length == 1){
-            for (Relation rel : RelationsList.relationsList) {
-                if(rel.fromState.equals(preState)) {
-                    for(State state: NFA.finalState){
-                        if(state.equals(rel.toState)){
-                            if(new Transition(String.valueOf(arr[0])).equals(rel.connection)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
+            for (Relation rel : RelationsList.relationsList)
+                if(RelationsList.ifInitStateInRelationsList(rel, preState) && NFA.ifNextStateInFinalStateArray(rel.toState) && TransitionList.ifTransitionValidForRelation(new Transition(String.valueOf(arr[0])), rel))
+                        return true;
         }
         else
             for(Relation rel : RelationsList.relationsList){
-                if(rel.fromState.equals(preState)){
-                    if(new Transition(String.valueOf(arr[0])).equals(rel.connection)){
-                        char[] newArr = Arrays.copyOfRange(arr, 1, arr.length);
+                if(RelationsList.ifInitStateInRelationsList(rel, preState) && TransitionList.ifTransitionValidForRelation(new Transition(String.valueOf(arr[0])), rel)){
+                    char[] newArr = Arrays.copyOfRange(arr, 1, arr.length);
                         check = recursiveChecker(newArr, rel.toState);
-                    }
                 }
             }
         return check;
     }
+
+    public static void checkForMultipleValidStrings(Scanner sc){
+        while (true){
+            check = false;
+            String checkString = sc.nextLine();
+            if(checkString.equalsIgnoreCase("exit"))
+                break;
+            else
+            if(RelationFunctions.checkIfValidString(checkString))
+                System.out.println("Valid string");
+            else
+                System.out.println("Invalid string");
+        }
+    }
+
 }

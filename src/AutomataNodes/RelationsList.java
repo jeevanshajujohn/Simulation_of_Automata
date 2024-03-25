@@ -41,11 +41,10 @@ public class RelationsList {
                 if(currentTransition.equals(new Transition(s1)))
                     hasTransition = true;
 
-
             if (hasTransition)
                 return s1;
             else
-                System.out.println("Enter a valid  transition: ");
+                System.out.println("Enter a valid transition: ");
         }
     }
 
@@ -53,11 +52,9 @@ public class RelationsList {
         while (true) {
             String s1 = scanner.nextLine();
             boolean hasState = false;
-            for(State currentState: StatesList.stateList)
-                if(currentState.equals(new State(s1)))
+            for (State currentState : StatesList.stateList)
+                if (currentState.equals(new State(s1)))
                     hasState = true;
-
-
             if (hasState)
                 return s1;
             else
@@ -65,4 +62,8 @@ public class RelationsList {
         }
     }
 
+
+    public static boolean ifInitStateInRelationsList(Relation relation, State state){
+        return relation.fromState.equals(state);
+    }
 }
