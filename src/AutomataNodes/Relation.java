@@ -24,6 +24,12 @@ public class Relation {
         return RelationID == relation.RelationID && Objects.equals(fromState, relation.fromState) && Objects.equals(toState, relation.toState) && Objects.equals(connection, relation.connection);
     }
 
+    public boolean partialEqualityCheckForFirstStateAndTransition(Object o){
+        if(o == null || getClass() !=  o.getClass()) return false;
+        Relation relation = (Relation) o;
+        return Objects.equals(fromState, relation.fromState) && Objects.equals(relation.connection, connection);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(fromState, toState, connection, RelationID);

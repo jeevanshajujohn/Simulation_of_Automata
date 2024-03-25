@@ -4,16 +4,16 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class RelationFunctions{
-    static boolean check = false;
-    public static boolean checkIfValidString(String initString) {
+    static boolean stringValidityChecker = false;
+    public static boolean checkIfValidStringInputted(String initString) {
         char[] splitString = initString.toCharArray();
         for(char element:splitString){
             if(!TransitionList.checkIfInTransitionList(element))
                 return false;
         }
-        return recursiveChecker(splitString, NFA.initialState);
+        return recursiveCheckerForStringValidity(splitString, NFA.initialState);
     }
-    public static boolean recursiveChecker(char[] arr, State preState){
+    public static boolean recursiveCheckerForStringValidity(char[] arr, State preState){
         if(arr.length == 1){
             for (Relation rel : RelationsList.relationsList)
                 if(RelationsList.ifInitStateInRelationsList(rel, preState) && NFA.ifNextStateInFinalStateArray(rel.toState) && TransitionList.ifTransitionValidForRelation(new Transition(String.valueOf(arr[0])), rel))
@@ -23,24 +23,41 @@ public class RelationFunctions{
             for(Relation rel : RelationsList.relationsList){
                 if(RelationsList.ifInitStateInRelationsList(rel, preState) && TransitionList.ifTransitionValidForRelation(new Transition(String.valueOf(arr[0])), rel)){
                     char[] newArr = Arrays.copyOfRange(arr, 1, arr.length);
-                        check = recursiveChecker(newArr, rel.toState);
+                        stringValidityChecker = recursiveCheckerForStringValidity(newArr, rel.toState);
                 }
             }
-        return check;
+        return stringValidityChecker;
     }
 
     public static void checkForMultipleValidStrings(Scanner sc){
         while (true){
-            check = false;
+            stringValidityChecker = false;
             String checkString = sc.nextLine();
             if(checkString.equalsIgnoreCase("exit"))
                 break;
             else
-            if(RelationFunctions.checkIfValidString(checkString))
+            if(RelationFunctions.checkIfValidStringInputted(checkString))
                 System.out.println("Valid string");
             else
                 System.out.println("Invalid string");
         }
     }
-
+    public static boolean checkIfFiniteOrNonFinite(){
+        boolean validityIdentifier = false;
+        for(State state: StatesList.stateList){
+            for(Transition transition: TransitionList.transitionList){
+                Relation newRelation = new Relation(state,  null, transition);
+                for(Relation relation: RelationsList.relationsList){
+                    if(newRelation.partialEqualityCheckForFirstStateAndTransition(relation)){
+                        validityIdentifier = true;
+                        break;
+                    }
+                }
+                if(!validityIdentifier){
+                    return false;
+                }
+            }
+        }
+        return validityIdentifier;
+    }
 }

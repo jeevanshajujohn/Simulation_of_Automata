@@ -23,16 +23,16 @@ public class RelationsList {
 
     static void createRelation(Scanner scanner) {
         System.out.println("Enter the initial state: ");
-        String s1 = checkStateForRelation(scanner);
+        String s1 = checkStateForCreatingARelation(scanner);
         System.out.println("Enter the final state: ");
-        String s2 = checkStateForRelation(scanner);
+        String s2 = checkStateForCreatingARelation(scanner);
         System.out.println("Enter the relation between the states: " );
-        String t = checkTransitionForRelation(scanner);
+        String t = checkTransitionForCreatingARelation(scanner);
 
         relationsList.add(new Relation(new State(s1), new State(s2), new Transition(t)));
     }
 
-    public static String checkTransitionForRelation(Scanner scanner) {
+    public static String checkTransitionForCreatingARelation(Scanner scanner) {
         while (true) {
             String s1 = scanner.nextLine();
             boolean hasTransition = false;
@@ -48,7 +48,7 @@ public class RelationsList {
         }
     }
 
-    public static String checkStateForRelation(Scanner scanner) {
+    public static String checkStateForCreatingARelation(Scanner scanner) {
         while (true) {
             String s1 = scanner.nextLine();
             boolean hasState = false;

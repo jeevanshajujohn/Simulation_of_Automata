@@ -8,5 +8,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         NFA.createNFA(sc);
         RelationFunctions.checkForMultipleValidStrings(sc);
+        System.out.println(RelationFunctions.checkIfFiniteOrNonFinite());
     }
 }
