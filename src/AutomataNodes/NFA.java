@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NFA{
+    static boolean isDFA;
     static State initialState;
     static State[] finalState;
     static ArrayList<Relation> relations = RelationsList.relationsList;
     public static void createNFA(Scanner scanner){
+        isDFA = false;
         StatesList.setStateList(scanner);
         TransitionList.setTransitionList(scanner);
-        RelationsList.setRelationsList(scanner);
+        RelationsList.setRelationsListForNFA(scanner);
         setStartState(scanner);
-        setFinalState(scanner);
+        setFinalStates(scanner);
     }
     static void setStartState(Scanner scanner){
         System.out.println("Enter the Start state: ");
@@ -26,7 +28,7 @@ public class NFA{
                 System.out.println("Enter a valid state");
         }
     }
-    static void setFinalState(Scanner scanner){
+    static void setFinalStates(Scanner scanner){
         System.out.println("Enter the no of Final states: ");
         int noOfFinalStates = Integer.parseInt(scanner.nextLine());
         finalState = new State[noOfFinalStates];
@@ -46,5 +48,14 @@ public class NFA{
             if(state.equals(checkState))
                 return true;
         return false;
+    }
+
+    public static void forceCreateDFA(Scanner scanner){
+            isDFA = true;
+            StatesList.setStateList(scanner);
+            TransitionList.setTransitionList(scanner);
+            RelationsList.setRelationsListForDFA(scanner);
+            setStartState(scanner);
+            setFinalStates(scanner);
     }
 }

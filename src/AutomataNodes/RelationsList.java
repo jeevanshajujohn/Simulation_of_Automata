@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class RelationsList {
     static ArrayList<Relation> relationsList;
 
-    public static void setRelationsList(Scanner scanner) {
+    public static void setRelationsListForNFA(Scanner scanner) {
         relationsList = new ArrayList<>();
 
         while (true) {
@@ -21,14 +21,23 @@ public class RelationsList {
         }
     }
 
+    public static void setRelationsListForDFA(Scanner scanner){
+        relationsList = new ArrayList<>();
+        for(State state: StatesList.stateList){
+            for(Transition transition: TransitionList.transitionList){
+                createRelation(state, transition, scanner);
+            }
+        }
+    }
+
     static void createRelation(Scanner scanner) {
         System.out.println("Enter the initial state: ");
-        String s1 = checkStateForCreatingARelation(scanner);
+        String initState = checkStateForCreatingARelation(scanner);
         System.out.println("Enter the final state: ");
-        String s2 = checkStateForCreatingARelation(scanner);
+        String nextState = checkStateForCreatingARelation(scanner);
         System.out.println("Enter the relation between the states: ");
         String t = checkTransitionForCreatingARelation(scanner);
-        Relation newRelation = new Relation(new State(s1), new State(s2), new Transition(t));
+        Relation newRelation = new Relation(new State(initState), new State(nextState), new Transition(t));
         for (Relation relation : relationsList){
             if(relation.equals(newRelation)){
                 System.out.println("Enter a Unique Relation");
@@ -36,6 +45,21 @@ public class RelationsList {
             }
         }
         relationsList.add(newRelation);
+    }
+
+
+    static void createRelation(State initState, Transition transition, Scanner scanner){
+        System.out.println("Enter the Final state for state " + initState.data + " with the transition " + transition.data + " : ");
+        String nextState = checkStateForCreatingARelation(scanner);
+        Relation newRelation = new Relation(initState, new State(nextState), transition);
+        for (Relation relation : relationsList){
+            if(relation.equals(newRelation)){
+                System.out.println("Enter a Unique Relation");
+                return;
+            }
+        }
+        relationsList.add(newRelation);
+
     }
 
     public static String checkTransitionForCreatingARelation(Scanner scanner) {

@@ -14,7 +14,11 @@ public class RelationFunctions{
         return recursiveCheckerForStringValidity(splitString, NFA.initialState);
     }
     public static boolean recursiveCheckerForStringValidity(char[] arr, State preState){
-        if(arr.length == 1){
+        if(arr.length == 0){
+            if(NFA.ifNextStateInFinalStateArray(NFA.initialState))
+                return true;
+        }
+        else if(arr.length == 1){
             for (Relation rel : RelationsList.relationsList)
                 if(RelationsList.ifInitStateInRelationsList(rel, preState) && NFA.ifNextStateInFinalStateArray(rel.toState) && TransitionList.ifTransitionValidForRelation(new Transition(String.valueOf(arr[0])), rel))
                         return true;
@@ -31,6 +35,7 @@ public class RelationFunctions{
 
     public static void checkForMultipleValidStrings(Scanner sc){
         while (true){
+            System.out.println("Enter a string: ");
             stringValidityChecker = false;
             String checkString = sc.nextLine();
             if(checkString.equalsIgnoreCase("exit"))
